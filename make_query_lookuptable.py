@@ -13,12 +13,19 @@ import os
 import netCDF4
 import datetime
 from matplotlib.dates import num2date, datestr2num
+import subprocess
 
 # usually 1st is good to pool all profile float files together as symlinks
 # this assumes the typical float file/dir structure after pull down from server
+# would be good to turn these directories into argument inputs to the script
 
-source_dir = "/home/saulo/projects/data/ARGO_profiles/central_tsio/"
-dest_dir = "/home/saulo/projects/data/ARGO_profiles/central_tsio/profile_pool/"
+cur_dir = subprocess.check_output("pwd", shell=True)[:-1]
+source_dir = cur_dir + "/testdata/"  # dir of source data (nc files)
+dest_dir = cur_dir + "/profile_pool/"  # where to put database and links
+
+if not os.path.isdir(dest_dir):
+    os.system("mkdir " + dest_dir)
+    print "creating destination directory"
 
 if not os.listdir(dest_dir):
     os.system("cp -s " + source_dir + "*/*/*prof.nc " + dest_dir)

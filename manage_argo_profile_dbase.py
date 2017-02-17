@@ -5,7 +5,8 @@ import netCDF4
 from operator import itemgetter
 
 # read the database of argo profile data as set up
-dest_dir = "/home/saulo/projects/data/ARGO_profiles/central_tsio/profile_pool/"
+cur_dir = subprocess.check_output("pwd", shell=True)[:-1]
+dest_dir = cur_dir + "/profile_pool/"
 dbase = np.load(dest_dir + "argo_profile_info_database.npz")
 
 # come up with search criteria/what/who to query (make criteria selection and query below more general)

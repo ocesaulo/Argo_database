@@ -2,12 +2,13 @@
 
 import numpy as np
 import netCDF4
+from operator import itemgetter
 
 # read the database of argo profile data as set up
 dest_dir = "/home/saulo/projects/data/ARGO_profiles/central_tsio/profile_pool/"
 dbase = np.load(dest_dir + "argo_profile_info_database.npz")
 
-# come up with search criteria/what/who to query
+# come up with search criteria/what/who to query (make criteria selection and query below more general)
 query = "year"
 crit = 2010
 
@@ -28,6 +29,9 @@ pathstofiles = [dest_dir + m + "_prof.nc" for m in daids]
 # once and then take all the relevant profiles
 #filestoread = list(set(pathstofiles))  # could come before pathstofile 
 #daids = list(set(match["floatid"]))  # has to be same as filestoread, could come before pathstofile
+
+# storage list
+argo_profs = []
 
 # read data in the matching lists
 #for n in range(0, len(prof_idx)):
@@ -60,6 +64,14 @@ for n in range(0, len(filestoread)):
     temp_a = argo_data.variables['TEMP_ADJUSTED'][prof_idxs, :]
     temp_a_qc = argo_data.variables['TEMP_ADJUSTED_QC'][prof_idxs, :]
     temp_a_er = argo_data.variables['TEMP_ADJUSTED_ERROR'][prof_idxs, :]
+    max_p = pres.max(axis=-1)
     argo_data.close()
     # storing these data in arrays or lists? something that will allow easy further querying and sorting
-
+    for k in range(0, prof_idxs):
+    	argo_profs.append([juld[k], lat[k], lon[k], juld_qc[k], pos_qc[k],
+                           max_p[k], prof_pres_qc[k], prof_sal_qc[k],
+                           prof_temp_qc[k], pres[k], pres_qc[k], pres_a[k],
+                           pres_a_qc[k], pres_a_er[k], sal[k], sal_qc[k],
+                           sal_a[k], sal_a_qc[k], sal_a_er[k], temp[k],
+                           temp_qc[k], temp_a[k], temp_a_qc[k], temp_a_er[k],])  # is a list of profiles, in fact a list of a list of prof properties
+argo_profiles_time = sorted(argo_profs, key=itemgetter(0))  # sort list by time

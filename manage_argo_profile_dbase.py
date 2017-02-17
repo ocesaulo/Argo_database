@@ -8,7 +8,7 @@ from operator import itemgetter
 # read the database of argo profile data as set up
 cur_dir = subprocess.check_output("pwd", shell=True)[:-1]
 dest_dir = cur_dir + "/profile_pool/"
-dbase = np.load(dest_dir + "argo_profile_info_database.npz")
+dbase = np.load(dest_dir + "argo_profile_info_database.npz")["dbase"]
 
 # come up with search criteria/what/who to query (make criteria selection and query below more general)
 query = "year"
@@ -37,7 +37,7 @@ argo_profs = []
 
 # read data in the matching lists
 #for n in range(0, len(prof_idx)):
-for n in range(0, len(filestoread)):
+for n in range(0, len(daids)):
     argo_data = netCDF4.Dataset(pathstofiles[n])
     #  argo_data = netCDF4.Dataset(filestoread[n])
     prof_idxs = match[match["floatid"]==daids[n]]["prof_n"]

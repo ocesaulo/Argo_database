@@ -28,7 +28,8 @@ if not os.path.isdir(dest_dir):
     print "creating destination directory"
 
 if not os.listdir(dest_dir):
-    os.system("cp -s " + source_dir + "*/*/*prof.nc " + dest_dir)
+    os.system("ln -s " + source_dir + "*/*prof.nc " + dest_dir)
+    print "creating sym links to raw argo profile netcdf data"
 else:
     print "There is stuff in the destination directory, assuming its the data"
 

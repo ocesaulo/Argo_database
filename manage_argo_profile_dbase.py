@@ -2,6 +2,7 @@
 
 import numpy as np
 import netCDF4
+import subprocess
 from operator import itemgetter
 
 # read the database of argo profile data as set up

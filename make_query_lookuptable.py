@@ -60,13 +60,16 @@ for dafile in prof_files:
         year, mon, day = date_prof.year, date_prof.month, date_prof.day
         lat = prof_data.variables["LATITUDE"][n]
         lon = prof_data.variables["LONGITUDE"][n]
+        pmin = prof_data.variables["PRESSURE"][n].min()
+        pmax = prof_data.variables["PRESSURE"][n].max()
         jul_qc = prof_data.variables["JULD_QC"][n]
         pos_qc = prof_data.variables["POSITION_QC"][n]
-        dbase.append( (floatid, nprofs, nlevs, year, mon, day, juld, lat, lon, jul_qc, pos_qc, n) )
+        dbase.append( (floatid, nprofs, nlevs, year, mon, day, juld, lat, lon, pmin, pmax, jul_qc, pos_qc, n) )
 dbase = np.array(dbase, dtype=[("floatid", '|S21'), ('nprofs', 'int32'),
                                ('nlevs', 'int32'), ('year', 'int32'),
                                ('month', 'int32'), ('day', 'int32'),
                                ('juld', 'float32'), ('lat', 'float32'),
-                               ('lon', 'float32'), ('jul_qc', 'int32'),
+                               ('lon', 'float32'), ('pmin', 'float32'),
+                               ('pmax', 'float32'), ('jul_qc', 'int32'),
                                ('pos_qc', 'int32'), ('prof_n', 'int32')])
 np.savez(dest_dir + "argo_profile_info_database", dbase=dbase)

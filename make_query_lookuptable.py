@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 
-# assembles a database of ARGO float profile data downloaded from GDAC
-# prepare look-up table array/list/dict
-# must contain EVERY PROFILE or EVERY FLOAT
-# each profile is a line in the dbase list
-# columns have the relevant profile info
-# the order of floats and profiles does not matter
+''' 
+ Assembles a database of ARGO float profile data downloaded from GDAC
+ prepare look-up table array/list/dict
+ must contain EVERY PROFILE or EVERY FLOAT
+ each profile is a line in the dbase list
+ columns have the relevant profile info
+ the order of floats and profiles does not matter
+'''
 
 import numpy as np
 import glob
